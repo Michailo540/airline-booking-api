@@ -76,6 +76,8 @@ class AirportSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Airport must have at least 2 characters."
             )
+        return value
+
     def validate(self, data):
         country = data.get("country")
         city = data.get("city")
@@ -139,7 +141,7 @@ class AirplaneSerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         airline = data.get("airline")
-        if Airline.objects.filter(name=name, airline=airline).exists():
+        if Airplane.objects.filter(name=name, airline=airline).exists():
             raise serializers.ValidationError(
                 "Airline already exists."
             )
